@@ -1,0 +1,93 @@
+.site-canvas {
+  position: relative;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 12% 16%, rgba(215, 187, 116, 0.18), transparent 26%),
+    radial-gradient(circle at 86% 12%, rgba(111, 148, 104, 0.2), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 22%),
+    linear-gradient(180deg, #8b5a34 0%, #6a4226 22%, #3e2516 100%);
+}
+
+.site-canvas::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 20%, rgba(0, 0, 0, 0.1)),
+    radial-gradient(circle at top center, rgba(255, 241, 214, 0.16), transparent 30%);
+  mix-blend-mode: soft-light;
+}
+
+.notebook-texture {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.48), transparent 22%),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 34px,
+      rgba(106, 141, 194, 0.12) 34px,
+      rgba(106, 141, 194, 0.12) 35px
+    ),
+    linear-gradient(180deg, rgba(126, 98, 64, 0.05), transparent 14%, rgba(126, 98, 64, 0.06)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 247, 231, 0.98));
+}
+
+.notebook-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 30px;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(158, 67, 55, 0.28) 12%,
+    rgba(158, 67, 55, 0.28) 88%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.terminal-surface {
+  background:
+    radial-gradient(circle at top right, rgba(82, 121, 106, 0.18), transparent 22%),
+    linear-gradient(180deg, rgba(22, 31, 44, 0.92), rgba(11, 16, 24, 1));
+}
+
+.terminal-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.02) 0,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 18%);
+  opacity: 0.72;
+}
+
+.terminal-topbar {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 25, 35, 0.96),
+    rgba(10, 15, 24, 0.96)
+  );
+}
+
+.grain-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 24%, rgba(113, 86, 49, 0.05) 0 0.8px, transparent 1px) 0 0 /
+      14px 14px,
+    radial-gradient(circle at 72% 68%, rgba(120, 95, 66, 0.04) 0 0.8px, transparent 1px) 0 0 /
+      18px 18px;
+  mix-blend-mode: multiply;
+}

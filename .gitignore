@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+
+# next
+/.next
+/out
+
+# local env
+.env*
+!.env.example
+
+# tests
+/coverage
+/playwright-report
+/test-results
+/tests/.features-gen
+
+# storybook
+/storybook-static
+
+# misc
+.DS_Store
+*.log
