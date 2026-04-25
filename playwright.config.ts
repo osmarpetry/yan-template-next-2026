@@ -25,9 +25,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `PORT=${port} pnpm dev`,
+    command: `PORT=${port} JOBS_FEED_MODE=fixture pnpm dev`,
     url: `http://127.0.0.1:${port}`,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });
