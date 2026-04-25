@@ -23,9 +23,12 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "yan-template-next-2026",
+  title: {
+    default: "find-remote-for-me",
+    template: "%s | find-remote-for-me",
+  },
   description:
-    "Reusable Next.js starter with Tailwind design tokens, Storybook, Vitest, Playwright BDD, and Socket.IO.",
+    "Private remote job discovery dashboard for a Luxembourg-based senior frontend/full-stack engineer.",
 };
 
 export default function RootLayout({

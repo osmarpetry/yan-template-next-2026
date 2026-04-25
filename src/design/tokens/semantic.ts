@@ -11,12 +11,12 @@ export const semanticTokens = {
     },
     text: {
       primary: "{color.ink.900}",
-      secondary: "rgba(32, 24, 14, 0.66)",
+      secondary: "rgba(18, 32, 45, 0.64)",
       inverse: "#eef4f8",
     },
     border: {
-      subtle: "rgba(78, 63, 35, 0.14)",
-      strong: "rgba(123, 150, 175, 0.22)",
+      subtle: "rgba(73, 103, 128, 0.16)",
+      strong: "rgba(121, 161, 188, 0.22)",
     },
     accent: {
       brand: "{color.moss.500}",

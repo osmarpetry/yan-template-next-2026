@@ -1,5 +1,5 @@
-import { TaskDemoPage } from "@/components/realtime/task-demo-page";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <TaskDemoPage />;
+  redirect("/jobs");
 }

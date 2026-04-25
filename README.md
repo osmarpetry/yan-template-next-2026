@@ -1,15 +1,13 @@
-# yan-template-next-2026
+# find-remote-for-me
 
-Reusable Next.js 16 starter for client-heavy product apps that need:
+Private remote job discovery dashboard for a Luxembourg-based senior frontend/full-stack engineer.
 
-- Tailwind v4 semantic design tokens generated from TypeScript
-- a custom Node server from day one
-- Socket.IO for live progress streams
-- Vitest + React Testing Library for FE/BE unit tests
-- API integration tests against the running app server
-- Playwright BDD with real `.feature` files
-- Storybook with token documentation
-- `plop` generators for common scaffolds
+## Current Slice
+
+- `/jobs` aggregates raw jobs from We Work Remotely, Remotive, and HN Hiring.
+- Jobs are normalized into one comparable table.
+- Search and source filtering happen client-side after the feed is loaded.
+- Source-specific failures are isolated so one broken feed does not blank the page.
 
 ## Scripts
 
@@ -32,6 +30,5 @@ Reusable Next.js 16 starter for client-heavy product apps that need:
 ## Runtime Notes
 
 - The app uses `server.ts` to boot Next and attach Socket.IO.
-- The sample domain is `tasks`, not an app-specific flow.
-- The template ships with an in-memory task manager to demonstrate HTTP + websocket state recovery.
+- The template's sample `tasks` domain is still present as reusable infrastructure example code, but the product-facing route for this slice is `/jobs`.
 - The targeted baseline is Node 24 LTS. The current workspace can still run it on Node 25 during development.
