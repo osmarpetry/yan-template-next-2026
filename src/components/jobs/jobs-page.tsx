@@ -47,25 +47,33 @@ function MetricCard({
 }
 
 function SourceStatusCard({ status }: { status: JobSourceStatus }) {
+  const stateLabel = !status.ok
+    ? "Issue"
+    : status.warning
+      ? "Partial"
+      : "Loaded";
+
+  const stateClassName = !status.ok || status.warning
+    ? "text-status-warning"
+    : "text-status-success";
+
   return (
     <Panel className="h-full" padding="dense" tone="paper">
       <div className="flex items-start justify-between gap-3">
         <JobSourceBadge source={status.source} />
-        <span
-          className={`font-mono text-[0.68rem] uppercase tracking-[0.18em] ${
-            status.ok ? "text-status-success" : "text-status-warning"
-          }`}
-        >
-          {status.ok ? "Loaded" : "Issue"}
+        <span className={`font-mono text-[0.68rem] uppercase tracking-[0.18em] ${stateClassName}`}>
+          {stateLabel}
         </span>
       </div>
       <p className="mt-4 font-display text-3xl leading-none text-text-primary">
         {status.count}
       </p>
       <p className="mt-2 text-sm leading-6 text-text-secondary">
-        {status.ok
-          ? `${status.count} jobs available from ${status.label} in this session.`
-          : status.error ?? `${status.label} could not be loaded.`}
+        {!status.ok
+          ? status.error ?? `${status.label} could not be loaded.`
+          : status.warning
+            ? `${status.count} jobs available from ${status.label} in this session. ${status.warning}`
+            : `${status.count} jobs available from ${status.label} in this session.`}
       </p>
     </Panel>
   );
@@ -84,6 +92,7 @@ export function JobsPage({ feed }: JobsPageProps) {
   });
 
   const sourceErrors = feed.sources.filter((source) => !source.ok);
+  const sourceWarnings = feed.sources.filter((source) => source.ok && source.warning);
   const hasSuccessfulSource = feed.sources.some((source) => source.ok);
   const isRefreshingSearch = query !== deferredQuery;
 
@@ -150,18 +159,25 @@ export function JobsPage({ feed }: JobsPageProps) {
           visibleCount={visibleJobs.length}
         />
 
-        {sourceErrors.length > 0 && hasSuccessfulSource ? (
+        {(sourceErrors.length > 0 || sourceWarnings.length > 0) && hasSuccessfulSource ? (
           <Panel padding="dense" tone="subtle" role="status">
             <p className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-text-secondary">
-              Partial source issues
+              Source issues
             </p>
             <p className="mt-2 text-sm leading-6 text-text-primary">
-              Some feeds failed to load, but successful sources are still visible
-              in the table below.
+              Some feeds or company boards had issues, but successful jobs are
+              still visible in the table below.
             </p>
             <ul className="mt-3 space-y-1 text-sm leading-6 text-text-secondary">
+              {sourceWarnings.map((source) => (
+                <li key={`${source.source}-warning`}>
+                  {source.label}: {source.warning}
+                </li>
+              ))}
               {sourceErrors.map((source) => (
-                <li key={source.source}>{source.error}</li>
+                <li key={source.source}>
+                  {source.label}: {source.error}
+                </li>
               ))}
             </ul>
           </Panel>

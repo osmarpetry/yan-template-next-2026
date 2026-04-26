@@ -6,6 +6,11 @@ const REQUEST_HEADERS = {
   "user-agent": "find-remote-for-me/0.1 (+private operator dashboard)",
 };
 
+export interface JobSourceFetchResult {
+  jobs: Job[];
+  warning: string | null;
+}
+
 interface NormalizeJobInput extends Omit<Job, "id"> {
   id?: string;
 }
@@ -15,11 +20,27 @@ function normalizeOptionalString(value: string | null | undefined) {
   return trimmed ? trimmed : null;
 }
 
-export async function fetchSourceText(source: JobSource, url: string) {
-  const response = await fetch(url, {
-    cache: "no-store",
-    headers: REQUEST_HEADERS,
+function buildRequestInit(init?: RequestInit): RequestInit {
+  const headers = new Headers(REQUEST_HEADERS);
+  const extraHeaders = new Headers(init?.headers);
+
+  extraHeaders.forEach((value, key) => {
+    headers.set(key, value);
   });
+
+  return {
+    ...init,
+    cache: init?.cache ?? "no-store",
+    headers,
+  };
+}
+
+export async function fetchSourceText(
+  source: JobSource,
+  url: string,
+  init?: RequestInit,
+) {
+  const response = await fetch(url, buildRequestInit(init));
 
   if (!response.ok) {
     throw new Error(`${getJobSourceLabel(source)} returned ${response.status}.`);
@@ -28,11 +49,12 @@ export async function fetchSourceText(source: JobSource, url: string) {
   return response.text();
 }
 
-export async function fetchSourceJson<T>(source: JobSource, url: string) {
-  const response = await fetch(url, {
-    cache: "no-store",
-    headers: REQUEST_HEADERS,
-  });
+export async function fetchSourceJson<T>(
+  source: JobSource,
+  url: string,
+  init?: RequestInit,
+) {
+  const response = await fetch(url, buildRequestInit(init));
 
   if (!response.ok) {
     throw new Error(`${getJobSourceLabel(source)} returned ${response.status}.`);
@@ -53,8 +75,8 @@ export function buildJobId(
     .slice(0, 16);
 }
 
-export function toIsoString(value: string | null | undefined) {
-  if (!value) {
+export function toIsoString(value: string | number | null | undefined) {
+  if (value === null || value === undefined || value === "") {
     return null;
   }
 
@@ -96,4 +118,37 @@ export function formatSourceError(source: JobSource, error: unknown) {
   }
 
   return `${getJobSourceLabel(source)} could not be loaded.`;
+}
+
+export function createSourceResult(
+  jobs: Job[],
+  warning: string | null = null,
+): JobSourceFetchResult {
+  return {
+    jobs,
+    warning,
+  };
+}
+
+export function joinParts(parts: Array<string | null | undefined>, separator = " · ") {
+  return parts
+    .map((part) => part?.trim())
+    .filter(Boolean)
+    .join(separator);
+}
+
+export function summarizeBoardFailures(
+  failures: Array<{ company: string; reason: string }>,
+) {
+  if (failures.length === 0) {
+    return null;
+  }
+
+  const detail = failures
+    .map((failure) => `${failure.company} (${failure.reason})`)
+    .join("; ");
+
+  return `${failures.length} ${
+    failures.length === 1 ? "board failed" : "boards failed"
+  }: ${detail}`;
 }

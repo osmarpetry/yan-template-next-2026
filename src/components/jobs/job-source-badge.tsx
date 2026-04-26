@@ -8,12 +8,24 @@ const badgeClasses: Record<JobSource, string> = {
     "border-[rgba(28,115,107,0.18)] bg-[rgba(28,115,107,0.08)] text-[rgba(19,84,78,1)]",
   "hn-hiring":
     "border-[rgba(176,121,58,0.18)] bg-[rgba(176,121,58,0.08)] text-[rgba(112,74,28,1)]",
+  "landing-jobs":
+    "border-[rgba(126,77,160,0.18)] bg-[rgba(126,77,160,0.08)] text-[rgba(84,44,112,1)]",
+  greenhouse:
+    "border-[rgba(61,118,64,0.18)] bg-[rgba(61,118,64,0.08)] text-[rgba(45,85,47,1)]",
+  lever:
+    "border-[rgba(0,111,145,0.18)] bg-[rgba(0,111,145,0.08)] text-[rgba(0,78,101,1)]",
+  ashby:
+    "border-[rgba(135,85,46,0.18)] bg-[rgba(135,85,46,0.08)] text-[rgba(95,58,28,1)]",
 };
 
 const dotClasses: Record<JobSource, string> = {
   "we-work-remotely": "bg-[rgba(36,95,125,1)]",
   remotive: "bg-[rgba(28,115,107,1)]",
   "hn-hiring": "bg-[rgba(176,121,58,1)]",
+  "landing-jobs": "bg-[rgba(126,77,160,1)]",
+  greenhouse: "bg-[rgba(61,118,64,1)]",
+  lever: "bg-[rgba(0,111,145,1)]",
+  ashby: "bg-[rgba(135,85,46,1)]",
 };
 
 interface JobSourceBadgeProps {

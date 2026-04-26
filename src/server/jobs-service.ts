@@ -20,7 +20,7 @@ export async function getJobsFeed(): Promise<JobsFeed> {
   const results = await Promise.allSettled(
     jobSourceFetchers.map(async (entry) => ({
       source: entry.source,
-      jobs: await entry.fetchJobs(),
+      result: await entry.fetchJobs(),
     })),
   );
 
@@ -31,9 +31,10 @@ export async function getJobsFeed(): Promise<JobsFeed> {
       return {
         source,
         label: getJobSourceLabel(source),
-        count: result.value.jobs.length,
+        count: result.value.result.jobs.length,
         ok: true,
         error: null,
+        warning: result.value.result.warning,
         fetchedAt,
       };
     }
@@ -44,13 +45,14 @@ export async function getJobsFeed(): Promise<JobsFeed> {
       count: 0,
       ok: false,
       error: formatSourceError(source, result.reason),
+      warning: null,
       fetchedAt: null,
     };
   });
 
   const jobs = sortJobsByRecency(
     results.flatMap((result) =>
-      result.status === "fulfilled" ? result.value.jobs : [],
+      result.status === "fulfilled" ? result.value.result.jobs : [],
     ),
   );
 

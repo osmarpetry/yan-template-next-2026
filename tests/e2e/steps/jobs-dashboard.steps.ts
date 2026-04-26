@@ -18,8 +18,8 @@ When("I open the source filter menu", async ({ page }) => {
   await page.getByRole("button", { name: /filter jobs by source/i }).click();
 });
 
-When("I disable the Remotive source", async ({ page }) => {
-  await page.getByRole("menuitemcheckbox", { name: /Remotive/i }).click();
+When("I disable the Ashby source", async ({ page }) => {
+  await page.getByRole("menuitemcheckbox", { name: /Ashby/i }).click();
   await page.keyboard.press("Escape");
 });
 
@@ -33,10 +33,22 @@ Then("I should see all source toggle options", async ({ page }) => {
   await expect(
     page.getByRole("menuitemcheckbox", { name: /HN Hiring/i }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("menuitemcheckbox", { name: /Landing\.jobs/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("menuitemcheckbox", { name: /Greenhouse/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("menuitemcheckbox", { name: /Lever/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("menuitemcheckbox", { name: /Ashby/i }),
+  ).toBeVisible();
 });
 
-When('I search visible jobs for "orbit"', async ({ page }) => {
-  await page.getByRole("searchbox", { name: /search visible jobs/i }).fill("orbit");
+When('I search visible jobs for "landing"', async ({ page }) => {
+  await page.getByRole("searchbox", { name: /search visible jobs/i }).fill("landing");
 });
 
 When("I clear the jobs search", async ({ page }) => {
@@ -49,39 +61,51 @@ Then("I should see all fixture jobs in the table", async ({ page }) => {
   await expect(table).toContainText("Senior Frontend Engineer");
   await expect(table).toContainText("Platform Engineer");
   await expect(table).toContainText("Senior Full Stack Engineer");
+  await expect(table).toContainText("Senior DevOps Engineer");
+  await expect(table).toContainText("Staff Design Engineer");
+  await expect(table).toContainText("Staff Product Engineer");
+  await expect(table).toContainText("Backend Engineer — Ingestion");
 });
 
-Then("I should see only the non-Remotive jobs in the table", async ({ page }) => {
+Then("I should see only the non-Ashby jobs in the table", async ({ page }) => {
   const table = getJobsTable(page);
 
   await expect(table).toContainText("Senior Frontend Engineer");
+  await expect(table).toContainText("Platform Engineer");
   await expect(table).toContainText("Senior Full Stack Engineer");
-  await expect(table).not.toContainText("Platform Engineer");
+  await expect(table).toContainText("Senior DevOps Engineer");
+  await expect(table).toContainText("Staff Design Engineer");
+  await expect(table).toContainText("Staff Product Engineer");
+  await expect(table).not.toContainText("Backend Engineer — Ingestion");
 });
 
-Then("I should see only the Orbit job in the table", async ({ page }) => {
+Then("I should see only the Landing.jobs job in the table", async ({ page }) => {
   const table = getJobsTable(page);
 
-  await expect(table).toContainText("Platform Engineer");
-  await expect(table).toContainText("Orbit");
+  await expect(table).toContainText("Senior DevOps Engineer");
+  await expect(table).toContainText("CliftonLarsonAllen");
   await expect(table).not.toContainText("Senior Frontend Engineer");
+  await expect(table).not.toContainText("Platform Engineer");
   await expect(table).not.toContainText("Senior Full Stack Engineer");
+  await expect(table).not.toContainText("Staff Design Engineer");
+  await expect(table).not.toContainText("Staff Product Engineer");
+  await expect(table).not.toContainText("Backend Engineer — Ingestion");
 });
 
-Then('I should see the jobs summary "Showing 3 of 3 jobs."', async ({ page }) => {
-  await expect(page.getByText(/Showing 3 of 3 jobs\./)).toBeVisible();
+Then('I should see the jobs summary "Showing 7 of 7 jobs."', async ({ page }) => {
+  await expect(page.getByText(/Showing 7 of 7 jobs\./)).toBeVisible();
 });
 
-Then('I should see the jobs summary "Showing 2 of 3 jobs."', async ({ page }) => {
-  await expect(page.getByText(/Showing 2 of 3 jobs\./)).toBeVisible();
+Then('I should see the jobs summary "Showing 6 of 7 jobs."', async ({ page }) => {
+  await expect(page.getByText(/Showing 6 of 7 jobs\./)).toBeVisible();
 });
 
-Then('I should see the jobs summary "Showing 1 of 3 jobs."', async ({ page }) => {
-  await expect(page.getByText(/Showing 1 of 3 jobs\./)).toBeVisible();
+Then('I should see the jobs summary "Showing 1 of 7 jobs."', async ({ page }) => {
+  await expect(page.getByText(/Showing 1 of 7 jobs\./)).toBeVisible();
 });
 
-Then('the source filter button should show "2 sources"', async ({ page }) => {
+Then('the source filter button should show "6 sources"', async ({ page }) => {
   await expect(
     page.getByRole("button", { name: /filter jobs by source/i }),
-  ).toContainText("2 sources");
+  ).toContainText("6 sources");
 });

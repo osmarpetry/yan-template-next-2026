@@ -35,6 +35,50 @@ const jobs: Job[] = [
     description: "TypeScript / Postgres / React / AI",
     tags: ["HN Hiring"],
   },
+  {
+    id: "landing-1",
+    source: "landing-jobs",
+    title: "Senior DevOps Engineer",
+    company: "CliftonLarsonAllen",
+    location: "Lisbon, PT",
+    publishedAt: "2026-04-21T12:00:00.000Z",
+    url: "https://example.com/landing-1",
+    description: "Azure, Python, and CI/CD role from Landing.jobs.",
+    tags: ["Landing.jobs", "Azure"],
+  },
+  {
+    id: "greenhouse-1",
+    source: "greenhouse",
+    title: "Staff Design Engineer",
+    company: "Vercel",
+    location: "Remote - United States",
+    publishedAt: "2026-04-20T12:00:00.000Z",
+    url: "https://example.com/greenhouse-1",
+    description: "Greenhouse board role for frontend systems.",
+    tags: ["Design Systems"],
+  },
+  {
+    id: "lever-1",
+    source: "lever",
+    title: "Staff Product Engineer",
+    company: "Plaid",
+    location: "London, UK",
+    publishedAt: "2026-04-19T12:00:00.000Z",
+    url: "https://example.com/lever-1",
+    description: "Lever posting focused on product APIs.",
+    tags: ["Product Engineering"],
+  },
+  {
+    id: "ashby-1",
+    source: "ashby",
+    title: "Backend Engineer — Ingestion",
+    company: "PostHog",
+    location: "Remote EMEA",
+    publishedAt: "2026-04-18T12:00:00.000Z",
+    url: "https://example.com/ashby-1",
+    description: "Analytics ingestion role from an Ashby board.",
+    tags: ["Backend", "Analytics"],
+  },
 ];
 
 describe("filterJobs", () => {
@@ -42,32 +86,86 @@ describe("filterJobs", () => {
     expect(
       filterJobs(jobs, {
         query: "react",
-        enabledSources: ["we-work-remotely", "remotive", "hn-hiring"],
+        enabledSources: [
+          "we-work-remotely",
+          "remotive",
+          "hn-hiring",
+          "landing-jobs",
+          "greenhouse",
+          "lever",
+          "ashby",
+        ],
       }),
     ).toHaveLength(2);
 
     expect(
       filterJobs(jobs, {
         query: "remotive",
-        enabledSources: ["we-work-remotely", "remotive", "hn-hiring"],
+        enabledSources: [
+          "we-work-remotely",
+          "remotive",
+          "hn-hiring",
+          "landing-jobs",
+          "greenhouse",
+          "lever",
+          "ashby",
+        ],
       }),
     ).toEqual([jobs[1]]);
 
     expect(
       filterJobs(jobs, {
         query: "remote us",
-        enabledSources: ["we-work-remotely", "remotive", "hn-hiring"],
+        enabledSources: [
+          "we-work-remotely",
+          "remotive",
+          "hn-hiring",
+          "landing-jobs",
+          "greenhouse",
+          "lever",
+          "ashby",
+        ],
       }),
     ).toEqual([jobs[2]]);
+
+    expect(
+      filterJobs(jobs, {
+        query: "landing jobs",
+        enabledSources: [
+          "we-work-remotely",
+          "remotive",
+          "hn-hiring",
+          "landing-jobs",
+          "greenhouse",
+          "lever",
+          "ashby",
+        ],
+      }),
+    ).toEqual([jobs[3]]);
+
+    expect(
+      filterJobs(jobs, {
+        query: "ashby",
+        enabledSources: [
+          "we-work-remotely",
+          "remotive",
+          "hn-hiring",
+          "landing-jobs",
+          "greenhouse",
+          "lever",
+          "ashby",
+        ],
+      }),
+    ).toEqual([jobs[6]]);
   });
 
   it("respects the enabled sources list before applying keyword search", () => {
     expect(
       filterJobs(jobs, {
         query: "",
-        enabledSources: ["we-work-remotely", "hn-hiring"],
+        enabledSources: ["we-work-remotely", "hn-hiring", "ashby"],
       }),
-    ).toEqual([jobs[0], jobs[2]]);
+    ).toEqual([jobs[0], jobs[2], jobs[6]]);
 
     expect(
       filterJobs(jobs, {
@@ -75,5 +173,12 @@ describe("filterJobs", () => {
         enabledSources: ["we-work-remotely"],
       }),
     ).toEqual([jobs[0]]);
+
+    expect(
+      filterJobs(jobs, {
+        query: "product engineering",
+        enabledSources: ["lever", "greenhouse"],
+      }),
+    ).toEqual([jobs[5]]);
   });
 });

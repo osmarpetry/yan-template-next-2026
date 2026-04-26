@@ -2,6 +2,10 @@ export const jobSources = [
   "we-work-remotely",
   "remotive",
   "hn-hiring",
+  "landing-jobs",
+  "greenhouse",
+  "lever",
+  "ashby",
 ] as const;
 
 export type JobSource = (typeof jobSources)[number];
@@ -10,6 +14,10 @@ export const jobSourceLabels: Record<JobSource, string> = {
   "we-work-remotely": "We Work Remotely",
   remotive: "Remotive",
   "hn-hiring": "HN Hiring",
+  "landing-jobs": "Landing.jobs",
+  greenhouse: "Greenhouse",
+  lever: "Lever",
+  ashby: "Ashby",
 };
 
 export function getJobSourceLabel(source: JobSource) {
@@ -34,6 +42,7 @@ export interface JobSourceStatus {
   count: number;
   ok: boolean;
   error: string | null;
+  warning: string | null;
   fetchedAt: string | null;
 }
 
