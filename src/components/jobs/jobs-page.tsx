@@ -110,10 +110,10 @@ export function JobsPage({ feed }: JobsPageProps) {
                   Raw remote jobs, one operator dashboard.
                 </h1>
                 <p className="max-w-2xl text-sm leading-7 text-white/72 md:text-base">
-                  First raw feed view for reviewing We Work Remotely, Remotive,
-                  and HN Hiring without opening every source manually. This
-                  slice only fetches, normalizes, and filters jobs. It does not
-                  classify eligibility yet.
+                  First raw feed view for reviewing public remote boards and
+                  selected ATS company boards without opening every source
+                  manually. This slice fetches, normalizes, and filters jobs,
+                  but it does not classify eligibility yet.
                 </p>
               </div>
             </div>

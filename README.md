@@ -4,9 +4,9 @@ Private remote job discovery dashboard for a Luxembourg-based senior frontend/fu
 
 ## Current Slice
 
-- `/jobs` aggregates raw jobs from We Work Remotely, Remotive, and HN Hiring.
+- `/jobs` aggregates raw jobs from We Work Remotely, Remotive, HN Hiring, Landing.jobs, and selected Greenhouse, Lever, and Ashby company boards.
 - Jobs are normalized into one comparable table.
-- Search and source filtering happen client-side after the feed is loaded.
+- Search and source filtering happen client-side after the feed is loaded, including preset keyword clusters for common triage passes.
 - Source-specific failures are isolated so one broken feed does not blank the page.
 
 ## Scripts

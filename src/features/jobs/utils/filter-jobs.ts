@@ -21,19 +21,41 @@ function buildSearchText(job: Job) {
   );
 }
 
+function parseQueryGroups(query: string) {
+  return query
+    .split("|")
+    .map((group) =>
+      [...group.matchAll(/"([^"]+)"|(\S+)/g)]
+        .map((match) => normalizeText(match[1] ?? match[2] ?? ""))
+        .filter(Boolean),
+    )
+    .filter((group) => group.length > 0);
+}
+
+function containsSearchTerm(searchText: string, term: string) {
+  const haystack = ` ${searchText} `;
+  const needle = ` ${term} `;
+
+  return haystack.includes(needle);
+}
+
 export function filterJobs(jobs: readonly Job[], filters: JobFilters) {
   const enabledSources = new Set(filters.enabledSources);
-  const query = normalizeText(filters.query);
+  const queryGroups = parseQueryGroups(filters.query);
 
   return jobs.filter((job) => {
     if (!enabledSources.has(job.source)) {
       return false;
     }
 
-    if (!query) {
+    if (queryGroups.length === 0) {
       return true;
     }
 
-    return buildSearchText(job).includes(query);
+    const searchText = buildSearchText(job);
+
+    return queryGroups.some((group) =>
+      group.every((term) => containsSearchTerm(searchText, term)),
+    );
   });
 }

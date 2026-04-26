@@ -26,3 +26,9 @@ Feature: Jobs dashboard
     When I clear the jobs search
     Then I should see all fixture jobs in the table
     And I should see the jobs summary "Showing 7 of 7 jobs."
+
+  Scenario: Apply a quick preset
+    Given the jobs dashboard is open
+    When I apply the Platform infra quick preset
+    Then I should see only the platform and infra jobs in the table
+    And I should see the jobs summary "Showing 3 of 7 jobs."

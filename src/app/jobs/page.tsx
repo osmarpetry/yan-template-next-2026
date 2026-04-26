@@ -6,7 +6,7 @@ import { loadJobsFeed } from "@/server/load-jobs-feed";
 export const metadata: Metadata = {
   title: "Jobs",
   description:
-    "First raw jobs dashboard view aggregating We Work Remotely, Remotive, and HN Hiring.",
+    "Raw jobs dashboard aggregating public remote boards and selected ATS company boards.",
 };
 
 export const runtime = "nodejs";

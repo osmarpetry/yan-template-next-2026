@@ -159,6 +159,53 @@ describe("filterJobs", () => {
     ).toEqual([jobs[6]]);
   });
 
+  it("supports AND terms, quoted phrases, and OR groups", () => {
+    expect(
+      filterJobs(jobs, {
+        query: 'react typescript | "design systems"',
+        enabledSources: [
+          "we-work-remotely",
+          "remotive",
+          "hn-hiring",
+          "landing-jobs",
+          "greenhouse",
+          "lever",
+          "ashby",
+        ],
+      }),
+    ).toEqual([jobs[0], jobs[2], jobs[4]]);
+
+    expect(
+      filterJobs(jobs, {
+        query: '"remote us" | pt',
+        enabledSources: [
+          "we-work-remotely",
+          "remotive",
+          "hn-hiring",
+          "landing-jobs",
+          "greenhouse",
+          "lever",
+          "ashby",
+        ],
+      }),
+    ).toEqual([jobs[2], jobs[3]]);
+
+    expect(
+      filterJobs(jobs, {
+        query: "pt",
+        enabledSources: [
+          "we-work-remotely",
+          "remotive",
+          "hn-hiring",
+          "landing-jobs",
+          "greenhouse",
+          "lever",
+          "ashby",
+        ],
+      }),
+    ).toEqual([jobs[3]]);
+  });
+
   it("respects the enabled sources list before applying keyword search", () => {
     expect(
       filterJobs(jobs, {
