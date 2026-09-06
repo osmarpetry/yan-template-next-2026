@@ -19,7 +19,7 @@
     "test:api": "vitest run tests/api",
     "test:e2e": "bddgen test && playwright test",
     "test:storybook": "storybook build --quiet",
-    "test": "pnpm run test:unit && pnpm run test:integration && pnpm run test:e2e && pnpm run test:storybook",
+    "test": "pnpm run test:unit && pnpm run test:integration && pnpm run test:api && pnpm run test:storybook",
     "storybook": "pnpm run design:tokens && storybook dev -p 6006",
     "build-storybook": "pnpm run design:tokens && storybook build",
     "generate:component": "plop component",
